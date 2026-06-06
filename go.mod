@@ -1,4 +1,4 @@
-module github.com/quic-go/quic-go
+module github.com/XeshSufferer/aquic-go
 
 go 1.25.0
 
