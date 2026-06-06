@@ -3,8 +3,8 @@ package qlog
 import (
 	"encoding/hex"
 
-	"github.com/quic-go/quic-go/internal/protocol"
-	"github.com/quic-go/quic-go/qlogwriter/jsontext"
+	"github.com/XeshSufferer/aquic-go/internal/protocol"
+	"github.com/XeshSufferer/aquic-go/qlogwriter/jsontext"
 )
 
 type Token struct {

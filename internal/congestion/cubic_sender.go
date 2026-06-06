@@ -3,11 +3,11 @@ package congestion
 import (
 	"fmt"
 
-	"github.com/quic-go/quic-go/internal/monotime"
-	"github.com/quic-go/quic-go/internal/protocol"
-	"github.com/quic-go/quic-go/internal/utils"
-	"github.com/quic-go/quic-go/qlog"
-	"github.com/quic-go/quic-go/qlogwriter"
+	"github.com/XeshSufferer/aquic-go/internal/monotime"
+	"github.com/XeshSufferer/aquic-go/internal/protocol"
+	"github.com/XeshSufferer/aquic-go/internal/utils"
+	"github.com/XeshSufferer/aquic-go/qlog"
+	"github.com/XeshSufferer/aquic-go/qlogwriter"
 )
 
 const (

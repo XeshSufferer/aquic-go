@@ -1,9 +1,9 @@
 package wire
 
 import (
-	"github.com/quic-go/quic-go/internal/protocol"
-	"github.com/quic-go/quic-go/internal/qerr"
-	"github.com/quic-go/quic-go/quicvarint"
+	"github.com/XeshSufferer/aquic-go/internal/protocol"
+	"github.com/XeshSufferer/aquic-go/internal/qerr"
+	"github.com/XeshSufferer/aquic-go/quicvarint"
 )
 
 // A StopSendingFrame is a STOP_SENDING frame

@@ -14,11 +14,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/quic-go/quic-go"
-	quicproxy "github.com/quic-go/quic-go/integrationtests/tools/proxy"
-	"github.com/quic-go/quic-go/internal/protocol"
-	"github.com/quic-go/quic-go/internal/qerr"
-	"github.com/quic-go/quic-go/internal/qtls"
+	"github.com/XeshSufferer/aquic-go"
+	quicproxy "github.com/XeshSufferer/aquic-go/integrationtests/tools/proxy"
+	"github.com/XeshSufferer/aquic-go/internal/protocol"
+	"github.com/XeshSufferer/aquic-go/internal/qerr"
+	"github.com/XeshSufferer/aquic-go/internal/qtls"
 
 	"github.com/stretchr/testify/require"
 )

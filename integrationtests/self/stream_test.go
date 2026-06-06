@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/quic-go/quic-go"
+	"github.com/XeshSufferer/aquic-go"
 
 	"golang.org/x/sync/errgroup"
 
