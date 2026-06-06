@@ -18,9 +18,9 @@ import (
 const (
 	// Maximum reordering in time space before time based loss detection considers a packet lost.
 	// Specified as an RTT multiplier.
-	timeThreshold = 9.0 / 8
+	timeThreshold = 1.0
 	// Maximum reordering in packets before packet threshold loss detection considers a packet lost.
-	packetThreshold = 3
+	packetThreshold = 2
 	// Before validating the client's address, the server won't send more than 3x bytes than it received.
 	amplificationFactor = 3
 	// We use Retry packets to derive an RTT estimate. Make sure we don't set the RTT to a super low value yet.
@@ -635,7 +635,7 @@ func (h *sentPacketHandler) getLossTimeAndSpace() (monotime.Time, protocol.Encry
 }
 
 func (h *sentPacketHandler) getScaledPTO(includeMaxAckDelay bool) time.Duration {
-	pto := h.rttStats.PTO(includeMaxAckDelay) << h.ptoCount
+	pto := h.rttStats.PTO(includeMaxAckDelay)
 	if pto > maxPTODuration || pto <= 0 {
 		return maxPTODuration
 	}
@@ -926,7 +926,7 @@ func (h *sentPacketHandler) OnLossDetectionTimeout(now monotime.Time) error {
 		})
 		h.qlogger.RecordEvent(qlog.PTOCountUpdated{PTOCount: h.ptoCount})
 	}
-	h.numProbesToSend += 2
+	h.numProbesToSend += 3
 	//nolint:exhaustive // We never arm a PTO timer for 0-RTT packets.
 	switch encLevel {
 	case protocol.EncryptionInitial:

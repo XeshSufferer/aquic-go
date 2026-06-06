@@ -28,12 +28,12 @@ const (
 const defaultNumConnections = 1
 
 // Default Cubic backoff factor
-const beta float32 = 0.7
+const beta float32 = 0.95
 
 // Additional backoff factor when loss occurs in the concave part of the Cubic
 // curve. This additional backoff factor is expected to give up bandwidth to
 // new concurrent flows and speed up convergence.
-const betaLastMax float32 = 0.85
+const betaLastMax float32 = 0.95
 
 // Cubic implements the cubic algorithm from TCP
 type Cubic struct {
