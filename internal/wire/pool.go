@@ -26,7 +26,7 @@ func putStreamFrame(f *StreamFrame) {
 	if !f.fromPool {
 		return
 	}
-	if protocol.ByteCount(cap(f.Data)) != protocol.MaxPacketBufferSize {
+	if len(f.Data) > 0 && protocol.ByteCount(cap(f.Data)) != protocol.MaxPacketBufferSize {
 		panic("wire.PutStreamFrame called with packet of wrong size!")
 	}
 	pool.Put(f)

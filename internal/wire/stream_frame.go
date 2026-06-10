@@ -56,30 +56,19 @@ func ParseStreamFrame(b []byte, typ FrameType, _ protocol.Version) (*StreamFrame
 		dataLen = uint64(len(b))
 	}
 
-	var frame *StreamFrame
-	if dataLen < protocol.MinStreamFrameBufferSize {
-		frame = &StreamFrame{}
-		if dataLen > 0 {
-			frame.Data = make([]byte, dataLen)
-		}
-	} else {
-		frame = GetStreamFrame()
-		// The STREAM frame can't be larger than the StreamFrame we obtained from the buffer,
-		// since those StreamFrames have a buffer length of the maximum packet size.
-		if dataLen > uint64(cap(frame.Data)) {
-			return nil, 0, io.EOF
-		}
-		frame.Data = frame.Data[:dataLen]
+	frame := GetStreamFrame()
+	if dataLen > uint64(cap(frame.Data)) {
+		return nil, 0, io.EOF
+	}
+	frame.Data = frame.Data[:dataLen]
+	if dataLen > 0 {
+		copy(frame.Data, b)
 	}
 
 	frame.StreamID = protocol.StreamID(streamID)
 	frame.Offset = protocol.ByteCount(offset)
 	frame.Fin = fin
 	frame.DataLenPresent = hasDataLen
-
-	if dataLen > 0 {
-		copy(frame.Data, b)
-	}
 	if frame.Offset+frame.DataLen() > protocol.MaxByteCount {
 		return nil, 0, errors.New("stream data overflows maximum offset")
 	}

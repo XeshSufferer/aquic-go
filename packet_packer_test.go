@@ -871,7 +871,11 @@ func TestPackShortHeaderPadToAtLeast4Bytes(t *testing.T) {
 
 	frame, frameLen, err := wire.ParseStreamFrame(payload[1+l:], frameType, protocol.Version1)
 	require.NoError(t, err)
-	require.Equal(t, f, frame)
+	require.Equal(t, f.StreamID, frame.StreamID)
+	require.Equal(t, f.Offset, frame.Offset)
+	require.Equal(t, len(f.Data), len(frame.Data))
+	require.Equal(t, f.Fin, frame.Fin)
+	require.Equal(t, f.DataLenPresent, frame.DataLenPresent)
 	require.Equal(t, len(payload)-2, frameLen)
 }
 

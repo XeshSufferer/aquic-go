@@ -55,7 +55,8 @@ func TestParseStreamFrameAllowsEmpty(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, protocol.StreamID(0x1337), f.StreamID)
 	require.Equal(t, protocol.ByteCount(0x12345), f.Offset)
-	require.Nil(t, f.Data)
+	require.Empty(t, f.Data)
+	require.NotNil(t, f.Data)
 	require.False(t, f.Fin)
 	require.Equal(t, len(data), l)
 }
@@ -112,7 +113,7 @@ func TestParseStreamUsesBufferForLongFrames(t *testing.T) {
 	require.NotPanics(t, frame.PutBack)
 }
 
-func TestParseStreamDoesNotUseBufferForShortFrames(t *testing.T) {
+func TestParseStreamUsesBufferForShortFrames(t *testing.T) {
 	data := encodeVarInt(0x12345) // stream ID
 	data = append(data, bytes.Repeat([]byte{'f'}, protocol.MinStreamFrameBufferSize-1)...)
 	frame, l, err := ParseStreamFrame(data, 0x8, protocol.Version1)
@@ -121,7 +122,7 @@ func TestParseStreamDoesNotUseBufferForShortFrames(t *testing.T) {
 	require.Equal(t, bytes.Repeat([]byte{'f'}, protocol.MinStreamFrameBufferSize-1), frame.Data)
 	require.Equal(t, protocol.ByteCount(protocol.MinStreamFrameBufferSize-1), frame.DataLen())
 	require.False(t, frame.Fin)
-	require.False(t, frame.fromPool)
+	require.True(t, frame.fromPool)
 	require.Equal(t, len(data), l)
 	require.NotPanics(t, frame.PutBack)
 }
